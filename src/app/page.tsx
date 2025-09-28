@@ -9,6 +9,8 @@ import VideoCard from "@/components/video-card";
 import AppAsset from "@/core/AppAsset";
 import { Play, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getAllEpisodes } from "@/query/api";
+import SkeletonCard from "@/components/video-card-skeleton";
 
 // Mock data for episodes
 const episodes = [
@@ -177,8 +179,20 @@ const customNotes = [
   },
 ]
 
+type Episode = {
+  id: number;
+  name: string;
+  length: string; // formatted like "00:12:07"
+  description: string;
+  thumbnail: string;
+};
+
 export default function Home() {
   const router = useRouter();
+
+  const { data, isPending } = getAllEpisodes();
+
+  console.log(data);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-black ">
@@ -204,6 +218,7 @@ export default function Home() {
                 src={AppAsset.gumballPoter}
                 alt={"Gumball Poster"}
                 fill
+                sizes="100vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
@@ -269,15 +284,27 @@ export default function Home() {
         <div className="space-y-8">
           {/* First batch of episodes */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {episodes.slice(0, 6).map((episode, index: number) => (
-              <VideoCard
-                key={index}
-                id={episode.id}
-                title={episode.title}
-                thumbnail={episode.thumbnail}
-                duration={episode.duration}
-                description={episode.description} />
-            ))}
+            {
+              !isPending &&
+              data.length != 0 &&
+              data.map((data: Episode, index: number) => (
+                <VideoCard
+                  key={index}
+                  id={data.id}
+                  title={data.name}
+                  thumbnail={data.thumbnail}
+                  duration={data.length}
+                  description={data.description} />
+              ))
+            }
+            {
+              isPending &&
+              Array.from({ length: 3 }).map((_, index: number) => {
+                return (
+                  <SkeletonCard key={index} />
+                );
+              })
+            }
           </div>
         </div>
       </section>
