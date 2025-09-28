@@ -8,11 +8,26 @@ const getEpisodesFunction = async () => {
   return response.data;
 }
 
-export const getAllEpisodes = () => {
+export const useGetAllEpisodes = () => {
   return useQuery({
     queryKey: ['episodes'],
     queryFn: getEpisodesFunction,
     staleTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
+}
+
+const getEpisodeFunction = async (id: number | null) => {
+  const response = await axios.get(`/episode/${id}`);
+  return response.data;
+}
+
+export const useGetEpisode = (id: number | null, options?: { enabled?: boolean }) => {
+  return useQuery({
+    queryKey: [`episode-${id}`],
+    queryFn: () => getEpisodeFunction(id),
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    ...options,
+  })
 }

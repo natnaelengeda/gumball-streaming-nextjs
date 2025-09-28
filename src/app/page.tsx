@@ -1,185 +1,25 @@
 "use client";
-
-import Image from "next/image";
-import Footer from "@/components/footer";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import VideoCard from "@/components/video-card";
-import AppAsset from "@/core/AppAsset";
-import { Play, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getAllEpisodes } from "@/query/api";
+import Image from "next/image";
+
+// components
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import VideoCard from "@/components/video-card";
 import SkeletonCard from "@/components/video-card-skeleton";
 
-// Mock data for episodes
-const episodes = [
-  {
-    id: 1,
-    title: "The DVD",
-    description: "Gumball and Darwin try to rent a DVD but encounter unexpected obstacles.",
-    duration: "11:30",
-    thumbnail: "/gumball-dvd-cartoon.png",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "The Responsible",
-    description: "Gumball tries to prove he's responsible enough to have a pet.",
-    duration: "11:45",
-    thumbnail: "/gumball-responsible-episode.png",
-  },
-  {
-    id: 3,
-    title: "The Third",
-    description: "A new student arrives and disrupts Gumball and Darwin's friendship.",
-    duration: "11:20",
-    thumbnail: "/gumball-third-episode.png",
-  },
-  {
-    id: 4,
-    title: "The Debt",
-    description: "Gumball owes Darwin a favor and tries to repay it.",
-    duration: "11:35",
-    thumbnail: "/gumball-debt-scene.png",
-  },
-  {
-    id: 5,
-    title: "The End",
-    description: "The world seems to be ending, but is it really?",
-    duration: "11:40",
-    thumbnail: "/gumball-end-episode.png",
-  },
-  {
-    id: 6,
-    title: "The Dress",
-    description: "Gumball has to wear a dress to school.",
-    duration: "11:25",
-    thumbnail: "/gumball-dress-episode.png",
-  },
-  {
-    id: 7,
-    title: "The Quest",
-    description: "Gumball goes on an epic quest to find Anais's lost doll.",
-    duration: "11:50",
-    thumbnail: "/gumball-quest.png",
-  },
-  {
-    id: 8,
-    title: "The Spoon",
-    description: "A simple spoon causes chaos in the Watterson household.",
-    duration: "11:30",
-    thumbnail: "/gumball-spoon-episode.png",
-  },
-  {
-    id: 9,
-    title: "The Pressure",
-    description: "Gumball feels pressured to get his first kiss.",
-    duration: "11:45",
-    thumbnail: "/gumball-pressure.png",
-  },
-  {
-    id: 10,
-    title: "The Painting",
-    description: "The family discovers a valuable painting in their house.",
-    duration: "11:35",
-    thumbnail: "/gumball-painting.png",
-  },
-  {
-    id: 11,
-    title: "The Laziest",
-    description: "Gumball and Darwin compete to see who is the laziest.",
-    duration: "11:40",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 12,
-    title: "The Ghost",
-    description: "Carrie the ghost tries to possess Gumball.",
-    duration: "11:30",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 13,
-    title: "The Mystery",
-    description: "Someone has been leaving messes around the school.",
-    duration: "11:45",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 14,
-    title: "The Prank",
-    description: "Gumball and Darwin's prank goes too far.",
-    duration: "11:25",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 15,
-    title: "The Gi",
-    description: "Gumball learns martial arts to impress a girl.",
-    duration: "11:50",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 16,
-    title: "The Kiss",
-    description: "Gumball accidentally kisses his grandmother.",
-    duration: "11:35",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 17,
-    title: "The Party",
-    description: "The kids throw a party while their parents are away.",
-    duration: "11:40",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 18,
-    title: "The Refund",
-    description: "Gumball tries to return a defective product.",
-    duration: "11:30",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 19,
-    title: "The Robot",
-    description: "Gumball builds a robot to do his chores.",
-    duration: "11:45",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 20,
-    title: "The Picnic",
-    description: "The family goes on a disastrous picnic.",
-    duration: "11:55",
-    thumbnail: "/placeholder.svg?height=200&width=300",
-  },
-]
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const customNotes = [
-  {
-    id: 1,
-    title: "🎉 Season Premiere!",
-    content: "Welcome to The Amazing World of Gumball! Get ready for hilarious adventures with Gumball and Darwin.",
-    type: "announcement",
-  },
-  {
-    id: 2,
-    title: "💡 Fun Fact",
-    content:
-      "Did you know? The show combines multiple animation styles including traditional 2D animation, CGI, and live-action!",
-    type: "trivia",
-  },
-  {
-    id: 3,
-    title: "🔥 Fan Favorites",
-    content: "Episodes 15-20 are some of the most beloved by fans. Don't miss these incredible adventures!",
-    type: "update",
-  },
-]
+// api
+import { useGetAllEpisodes } from "@/query/api";
 
-type Episode = {
+// icons
+import { Play, Star } from "lucide-react";
+
+import AppAsset from "@/core/AppAsset";
+
+export type Episode = {
   id: number;
   name: string;
   length: string; // formatted like "00:12:07"
@@ -189,24 +29,12 @@ type Episode = {
 
 export default function Home() {
   const router = useRouter();
-
-  const { data, isPending } = getAllEpisodes();
-
-  console.log(data);
+  const { data, isPending } = useGetAllEpisodes();
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-black ">
       {/* Header */}
-      <header className="border-b border-white/10 bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-white">Gumball Stream</h1>
-            <Badge variant="secondary" className="bg-blue-600 text-white">
-              20 Episodes
-            </Badge>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="container px-4 py-8 pt-24 mx-auto md:px-20">
