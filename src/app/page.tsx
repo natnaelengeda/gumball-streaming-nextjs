@@ -56,6 +56,9 @@ export default function Home() {
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                 <Button
+                  onClick={() => {
+                    router.push("/episode/1")
+                  }}
                   size="lg"
                   className="text-white cursor-pointer bg-white/20 hover:bg-white/30 border-white/30">
                   <Play className="w-6 h-6 mr-2" />

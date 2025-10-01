@@ -18,7 +18,20 @@ export const metadata: Metadata = {
   title: "Gumball Stream - The Amazing World of Gumball",
   description: "Stream all episodes of The Amazing World of Gumball",
   icons: {
-    icon: "https://static.wikia.nocookie.net/fcs-vs-battle/images/d/d9/Season_3_Gumball_Watterson_Vector.png/revision/latest?cb=20210203182356"
+    icon: "./logo.webp"
+  },
+  openGraph: {
+    title: "Gumball Stream - The Amazing World of Gumball",
+    description: "Stream all episodes of The Amazing World of Gumball",
+    url: "https://gumball-streaming.vercel.app",
+    siteName: "Gumball Streaming",
+    images: [
+      {
+        url: "/seo-image.webp",
+        width: 1200,
+        height: 630,
+      }
+    ]
   }
 };
 
