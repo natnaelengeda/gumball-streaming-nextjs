@@ -32,6 +32,18 @@ export const metadata: Metadata = {
         height: 630,
       }
     ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gumball Stream - The Amazing World of Gumball",
+    description: "Stream all episodes of The Amazing World of Gumball",
+    images: ["/seo-image.webp"],
+    site: "@GumballStream"
+  },
+  appleWebApp: {
+    title: "Gumball Stream",
+    statusBarStyle: "default",
+    startupImage: ["/seo-image.webp"]
   }
 };
 
