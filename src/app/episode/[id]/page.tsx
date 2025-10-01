@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useParams } from 'next/navigation';
 import Header from '@/components/header';
@@ -8,10 +8,11 @@ import { useGetEpisode } from '@/query/api';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Send, ThumbsDown, ThumbsUp, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import VideoPlayer from '@/components/video-player';
-import { fixTime } from '@/utils/fixTime';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
+
+// utils
+import { fixTime } from '@/utils/fixTime';
 
 export default function Page() {
   const params = useParams();
@@ -71,6 +72,11 @@ export default function Page() {
       setNewComment("")
     }
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-black ">

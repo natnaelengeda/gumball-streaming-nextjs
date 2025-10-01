@@ -18,6 +18,7 @@ import { useGetAllEpisodes } from "@/query/api";
 import { Play, Star } from "lucide-react";
 
 import AppAsset from "@/core/AppAsset";
+import { useEffect } from "react";
 
 export type Episode = {
   id: number;
@@ -30,6 +31,10 @@ export type Episode = {
 export default function Home() {
   const router = useRouter();
   const { data, isPending } = useGetAllEpisodes();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-black ">
@@ -114,6 +119,7 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {
               !isPending &&
+              data &&
               data.length != 0 &&
               data.map((data: Episode, index: number) => (
                 <VideoCard
@@ -127,7 +133,7 @@ export default function Home() {
             }
             {
               isPending &&
-              Array.from({ length: 3 }).map((_, index: number) => {
+              Array.from({ length: 8 }).map((_, index: number) => {
                 return (
                   <SkeletonCard key={index} />
                 );
