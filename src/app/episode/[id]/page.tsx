@@ -146,7 +146,7 @@ export default function Page() {
               </div>}
 
             {/* Like/Dislike Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2">
               <Button
                 variant={userVote === "like" ? "default" : "outline"}
                 size="sm"
