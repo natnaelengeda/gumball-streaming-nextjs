@@ -31,3 +31,17 @@ export const useGetEpisode = (id: number | null, options?: { enabled?: boolean }
     ...options,
   })
 }
+
+const getComments = async (id: number | null) => {
+  const response = await axios.get(`/comments/${id}`);
+  return response.data;
+}
+
+export const useGetComments = (id: number | null) => {
+  return useQuery({
+    queryKey: [`episode-comment-${id}`],
+    queryFn: () => getComments(id),
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: false,
+  })
+}

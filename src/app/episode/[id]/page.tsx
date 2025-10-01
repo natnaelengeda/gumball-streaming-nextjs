@@ -13,6 +13,8 @@ import { Input } from '@/components/ui/input';
 
 // utils
 import { fixTime } from '@/utils/fixTime';
+import ViewComments from '@/components/ui/view-comments';
+import AddComment from '@/components/add-comment';
 
 export default function Page() {
   const params = useParams();
@@ -204,70 +206,9 @@ export default function Page() {
 
         {/* Comments Section */}
         <div className='w-full grid grid-cols-2 gap-5'>
-          <Card className="text-white bg-white/10 border-white/20">
-            <CardHeader>
-              <CardTitle>Comments</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Comments List */}
-              <div className="space-y-4">
-                {comments.length === 0 ? (
-                  <p
-                    className="py-8 text-center text-white/70">
-                    No comments yet. Be the first to share your thoughts!
-                  </p>
-                ) : (
-                  comments.map((comment, index: number) => (
-                    <div
-                      key={index}
-                      className="p-4 rounded-lg bg-white/5">
-                      {/* <div className="flex items-center gap-2 mb-2">
-                        <User className="w-4 h-4 text-white/70" />
-                        <span className="font-semibold text-white">{comment.name}</span>
-                        <span className="text-sm text-white/50">{comment.timestamp}</span>
-                      </div> */}
-                      {/* <p className="text-white/90">{comment.content}</p> */}
-                    </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="text-white bg-white/10 border-white/20">
-            <CardHeader>
-              <CardTitle>Add Comments</CardTitle>
-              <CardDescription className="text-white/70">Share your thoughts about this episode</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Add Comment Form */}
-              <div className="flex flex-col items-end p-4 space-y-4 rounded-lg bg-white/5">
-                <div className="w-full ">
-                  <Input
-                    placeholder="Your name"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                    className="w-full text-white bg-white/10 border-white/20 placeholder:text-white/50"
-                  />
-                </div>
-                <Textarea
-                  placeholder="Write your comment..."
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 min-h-[100px]"
-                />
-                <Button
-                  onClick={handleAddComment}
-                  disabled={!newComment.trim() || !userName.trim()}
-                  className="bg-primary hover:bg-primary/95">
-                  <Send className="w-4 h-4 mr-2" />
-                  Post Comment
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <ViewComments id={id} />
+          <AddComment id={id} />
         </div>
-
       </div>
     </div>
   )
