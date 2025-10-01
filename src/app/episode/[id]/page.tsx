@@ -205,7 +205,7 @@ export default function Page() {
             </div>}
 
         {/* Comments Section */}
-        <div className='w-full grid grid-cols-2 gap-5'>
+        <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-5'>
           <ViewComments id={id} />
           <AddComment id={id} />
         </div>
